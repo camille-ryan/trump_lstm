@@ -17,13 +17,16 @@ class StdOutListener(StreamListener):
         self.api = API(auth)
 
     def on_status(self, source):
-        author = source.author.screen_name
-        text =  source.text
-        tweet_id = source.id
-        if ((author == 'realDonaldTrump') | ("@Trump_LSTM" in text)) & (author != 'Trump_LSTM'):
-            mention = '@' + author + ' '
-            tweet = generate_tweet(text, 0.6, prepend = mention)
-            self.api.update_status(tweet, tweet_id)
+        try:
+            author = source.author.screen_name
+            text =  source.text
+            tweet_id = source.id
+            if ((author == 'realDonaldTrump') | ("@Trump_LSTM" in text)) & (author != 'Trump_LSTM'):
+                mention = '@' + author + ' '
+                tweet = generate_tweet(text, 0.6, prepend = mention)
+                self.api.update_status(tweet, tweet_id)
+        except: 
+          pass
         return True
 
     def on_error(self, status):

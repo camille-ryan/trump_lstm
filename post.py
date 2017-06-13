@@ -43,6 +43,7 @@ if __name__ == '__main__':
     l.set_auth(auth)
     api = API(auth)
 
+    time.sleep(randint(0,5400))
     for i in range(randint(2,5)):
         tweet = generate_tweet('#MAGA', 0.6)
         api.update_status(tweet)

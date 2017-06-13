@@ -19,14 +19,14 @@ def sample(preds, temperature=1.0):
 	probas = np.random.multinomial(1, preds, 1)
 	return np.argmax(probas)
 
-def generate_tweet(input, temperature):
-	generated = ''
+def generate_tweet(input, temperature, prepend):
+	generated = prepend
 	sentence = (' ' * (maxlen - 1)) + input
 	sentence = ''.join(e for e in sentence if e in chars )
 	sentence = sentence[(len(sentence) - 40):]
 	next_char = '0'
 
-	for i in range(140):
+	while len(generated) < 140:
 		x_char = np.zeros((1, maxlen, len(chars)))
 		for t, char in enumerate(sentence):
 			x_char[0, t, char_indices[char]] = 1.
@@ -37,4 +37,6 @@ def generate_tweet(input, temperature):
 
 		generated += next_char
 		sentence = sentence[1:] + next_char
+
+	generated = generated[:generated.rfind(' ')]
 	return generated

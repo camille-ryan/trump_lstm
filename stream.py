@@ -16,16 +16,21 @@ class StdOutListener(StreamListener):
     def set_auth(self, auth):
         self.api = API(auth)
 
-    def on_data(self, data):
-        source = json.loads(data)
-        mention = '@' + source['user']['screen_name'] + ' '
-        tweet = generate_tweet(source['text'], 0.6)[:140 - len(mention)]
-        response = mention + tweet
-        self.api.update_status(response, source['id'])
+    def on_status(self, source):
+        author = source.author.screen_name
+        text =  source.text
+        tweet_id = source.id
+        if ((author == 'realDonaldTrump') | ("@Trump_LSTM" in text)) & (author != 'Trump_LSTM'):
+            mention = '@' + author + ' '
+            tweet = generate_tweet(text, 0.6, prepend = mention)
+            self.api.update_status(tweet, tweet_id)
         return True
 
     def on_error(self, status):
         print status
+        if status == 420:
+            #returning False in on_data disconnects the stream
+            return False
 
 
 if __name__ == '__main__':
@@ -36,10 +41,9 @@ if __name__ == '__main__':
     l = StdOutListener()
     l.set_auth(auth)
     stream = Stream(auth, l)
+    stream2 = Stream(auth, l)
 
-    #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
-    stream.filter(track=['Trump_LSTM'])
-
+    stream.filter(follow=['25073877'], track=['Trump_LSTM'])
 
 
 

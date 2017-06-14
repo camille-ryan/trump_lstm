@@ -26,7 +26,7 @@ def generate_tweet(input, temperature, prepend = ''):
 	sentence = sentence[(len(sentence) - 40):]
 	next_char = '0'
 
-	while len(generated) < 140:
+	while((len(generated) < 140) & (next_char != u'')):
 		x_char = np.zeros((1, maxlen, len(chars)))
 		for t, char in enumerate(sentence):
 			x_char[0, t, char_indices[char]] = 1.
@@ -35,8 +35,9 @@ def generate_tweet(input, temperature, prepend = ''):
 		next_index = str(sample(preds, temperature))
 		next_char = indices_char[next_index]
 
-		generated += next_char
-		sentence = sentence[1:] + next_char
-
-	generated = generated[:generated.rfind(' ')]
+		if next_char not in u'':
+			generated += next_char
+			sentence = sentence[1:] + next_char
+	if next_char != u'':
+		generated = generated[:generated.rfind(' ')]
 	return generated

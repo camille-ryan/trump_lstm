@@ -19,7 +19,7 @@ class StdOutListener(StreamListener):
     def on_status(self, source):
         try:
             author = source.author.screen_name
-            text =  source.text
+            text =  source.text + u''
             tweet_id = source.id
             if ((author == 'realDonaldTrump') | ("@Trump_LSTM" in text)) & (author != 'Trump_LSTM'):
                 mention = '@' + author + ' '

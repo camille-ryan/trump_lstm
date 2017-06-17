@@ -43,4 +43,6 @@ def generate_tweet(input, temperature, prepend = ''):
 			sentence = sentence[1:] + next_char
 	if next_char != u'':
 		generated = generated[:generated.rfind(' ')]
+	if generated == prepend:
+		generated = generate_tweet(input, temperature, prepend)
 	return generated

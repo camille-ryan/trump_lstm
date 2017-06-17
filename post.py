@@ -24,9 +24,9 @@ if __name__ == '__main__':
     api = API(auth)
 
     time.sleep(randint(0,5400))
-    tweet = generate_tweet(u'#MAGA', 0.6)
+    tweet = generate_tweet(u'#MAGA!', 0.6)
     for i in range(randint(2,5)):
-        tweet = generate_tweet('tweet', 0.6)
+        tweet = generate_tweet(tweet + u'', 0.6)
         api.update_status(tweet)
         time.sleep(randint(10,300))
 

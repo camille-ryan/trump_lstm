@@ -26,7 +26,7 @@ class StdOutListener(StreamListener):
             tweet_id = source.id
             if ((author == 'realDonaldTrump') | ("@Trump_LSTM" in text)) & (author != 'Trump_LSTM'):
                 mention = '@' + author + ' '
-                tweet = generate_tweet(text, 0.6, prepend = mention)
+                tweet = generate_tweet(text, 0.4, prepend = mention)
                 self.api.update_status(tweet, tweet_id)
         except: 
           pass

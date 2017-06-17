@@ -23,10 +23,10 @@ if __name__ == '__main__':
     auth.set_access_token(keys["access_token"], keys["access_token_secret"])
     api = API(auth)
 
-    time.sleep(randint(0,5400))
+    #time.sleep(randint(0,5400))
     tweet = generate_tweet(u'#MAGA!', 0.6)
     for i in range(randint(2,5)):
-        tweet = generate_tweet(tweet + u'', 0.6)
+        tweet = generate_tweet(tweet + u'', 0.4)
         api.update_status(tweet)
         time.sleep(randint(10,300))
 
